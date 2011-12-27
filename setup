@@ -8,7 +8,8 @@ mkdir -p $SRCDIR
 echo "#!/bin/sh" > paths
 echo "export REPOPATH=\"$SRCDIR\"" >> paths
 echo "export SCRIPTSDIR=\"$PWD\"" >> paths
-chmod a+rx $SCRIPTSDIR/paths
+chmod a+rx paths
+. ./paths
 fi
 INPATH=`cat ~/.bashrc | grep "SCRIPTSDIR"`
 if [ ! "$INPATH" ]
@@ -18,7 +19,7 @@ echo "source $PWD/paths" >> ~/.bashrc
 echo "export PATH=\$PATH:\$SCRIPTSDIR" >> ~/.bashrc
 export PATH=\$PATH:\$SCRIPTSDIR
 fi
-$SCRIPTSDIR/paths
+. $SCRIPTSDIR/paths
 echo "paths and .bashrc set up. Running repo init."
 cd $REPOPATH
 repo init -u http://github.com/nuclearmistake/android.git -b gingerbread --config-name
