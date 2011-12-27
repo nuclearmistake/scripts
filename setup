@@ -23,7 +23,7 @@ echo "paths and .bashrc set up. Running repo init."
 cd $REPOPATH
 repo init -u http://github.com/nuclearmistake/android.git -b gingerbread --config-name
 chmod -R a+rwx .repo
-repo sync -j32
+repo sync -j16
 vendor/cyanogen/get-rommanger
 maked2g
 
