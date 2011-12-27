@@ -1,0 +1,29 @@
+#!/bin/sh
+PWD=`pwd`
+if [ ! -e "$SCRIPTSDIR/paths" ]
+then
+echo "Type the absolute path of where you'd like to checkout the android source:"
+read SRCDIR
+mkdir -p $SRCDIR
+echo "#!/bin/sh" > paths
+echo "export REPOPATH=\"$SRCDIR\"" >> paths
+echo "export SCRIPTSDIR=\"$PWD\"" >> paths
+chmod a+rx $SCRIPTSDIR/paths
+fi
+INPATH=`cat ~/.bashrc | grep "SCRIPTSDIR"`
+if [ ! "$INPATH" ]
+then
+echo "Setting up .bashrc"
+echo "source $PWD/paths" >> ~/.bashrc
+echo "export PATH=\$PATH:\$SCRIPTSDIR" >> ~/.bashrc
+export PATH=\$PATH:\$SCRIPTSDIR
+fi
+$SCRIPTSDIR/paths
+echo "paths and .bashrc set up. Running repo init."
+cd $REPOPATH
+repo init -u http://github.com/nuclearmistake/android.git -b gingerbread --config-name
+chmod -R a+rwx .repo
+repo sync -j32
+vendor/cyanogen/get-rommanger
+maked2g
+
